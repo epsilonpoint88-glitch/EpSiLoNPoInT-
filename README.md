@@ -1216,7 +1216,6 @@ Public License instead of this License.  But first, please read
 PRICING_350K = """
                     🔴 TSAR-EXEC v7.1 + EpSiLoNPoInTFuCK v5.1
                     ════════════════════════════════════════════
-                    LICENCE THREAT INTEL / RED TEAM: 350 000€ HT
 
                     📋 INCLUS DANS LA LICENCE:
                     • Framework source complet (21 fichiers)
@@ -1231,17 +1230,6 @@ PRICING_350K = """
                     +33 1 46 53 53 53 (Orange Cyberdefense Paris)
                     recrutement.ocd@orange.com
                     
-                    📎 PACKAGE: TSAR-SALE-350K.zip (25MB)
-                    🚀 DÉMO LIVE: Disponible immédiatement
-"""
-
-PACKAGE_CMD = """
-cd \~/TSAR-EXEC
-zip -r \~/TSAR-SALE-350K.zip .
-ls -lh \~/TSAR-SALE-350K.zip  # \~25MB
-echo "📞 LUNDI 9H → +33 1 46 53 53 53"
-echo "TSAR-EXEC v7.1 prêt - 350K€ threat intel"
-"""
 
 print(f"""{PRICING_350K}
 {LEGAL_DISCLAIMER}
