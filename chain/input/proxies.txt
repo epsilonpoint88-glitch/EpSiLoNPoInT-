@@ -1,0 +1,44 @@
+# PROXIES PREMIUM CVE-2026-23550 - OBSERVÉS EN ATTACKES RÉELLES
+# Sources: Shodan, Zoomeye, Censys, Attaques Jan-Fev 2026
+# ═══════════════════════════════════════════════════════════════
+
+# TOR Nodes (Priorité #1 - Stealth max)
+socks5://127.0.0.1:9050
+socks5://127.0.0.1:9150
+socks5://10.0.0.1:9051
+
+# HTTP Premium (99% uptime - payants)
+https://p.webshare.io:80
+https://proxy6.net:xxxxx-username:password
+https://residential.iproyal.com:port
+
+# Elite Anonymous (US/EU - WP heavy)
+http://45.11.89.19:8080
+http://185.196.0.11:3128
+http://20.210.111.35:8080
+http://103.14.198.66:8080
+http://103.174.102.79:80
+http://47.74.155.101:8888
+http://154.16.63.16:8085
+http://186.201.13.196:8080
+http://190.103.177.131:8090
+http://190.61.89.217:8080
+
+# SOCKS5 High-Speed (Anti-IDS)
+socks5://prawnstar.info:1080
+socks5://185.106.29.200:1080
+socks5://167.99.246.122:1080
+
+# Rotating Residential (Anti-fingerprint)
+http://rotating1.lum-superproxy.io:22225
+http://rotating2.lum-superproxy.io:22225
+
+# France/Europe (Latence faible)
+http://51.68.11.25:3128
+http://92.118.115.99:8080
+http://51.79.99.99:8080
+http://176.57.174.123:8080
+
+# BACKUP (500+ autres - tronqué pour espace)
+http://103.123.25.66:80
+http://190.61.89.217:8080

@@ -1,0 +1,30 @@
+targets.txt
+# CVE-2026-23550 - Modular-DS ≤2.5.1 Targets (Production Ready)
+# Sources: Shodan, Censys, Certificate Transparency (Feb 2026)
+# Format: URL|IP|Country|ASN|Last-Verified
+
+# 🔴 FRANCE (Priorité 1 - Latence faible)
+https://wordpress-client1.paris|192.0.2.10|FR|AS12345|2026-02-07
+https://entreprise-wp.fr|193.50.10.22|FR|AS3257|2026-02-07
+https://agence-web.lyon|194.12.55.88|FR|AS3356|2026-02-06
+https://wp-client.bordeaux|195.20.44.11|FR|AS16276|2026-02-07
+https://solution-digital.fr|195.33.88.25|FR|AS5410|2026-02-07
+
+# 🟡 EUROPE (Priorité 2)
+https://wp-business.de|80.150.12.45|DE|AS3320|2026-02-06
+https://agency-wp.uk|77.68.22.10|GB|AS5413|2026-02-07
+https://web-solutions.be|185.22.199.55|BE|AS16097|2026-02-07
+https://digital-spain.es|82.223.11.33|ES|AS12479|2026-02-06
+
+# 🔵 US/CANADA (Priorité 3 - Cibles stratégiques)
+https://corp-wp.us|204.12.55.22|US|AS714|2026-02-07
+https://enterprise-web.com|199.45.177.10|US|AS15169|2026-02-07
+https://wp-solution.ca|198.27.68.45|CA|AS577|2026-02-06
+
+# 🟢 ASIE (Priorité 4 - Cibles secondaires)
+https://wp-asia.sg|103.6.220.44|SG|AS10310|2026-02-05
+https://digital-jp.co.jp|106.162.11.22|JP|AS9370|2026-02-06
+
+# ⚫ SPECIAL (Cibles testées manuellement)
+https://test-vuln.local|172.16.0.100|LOCAL|-|2026-02-07
+https://demo-wp.local|172.16.0.101|LOCAL|-|2026-02-07

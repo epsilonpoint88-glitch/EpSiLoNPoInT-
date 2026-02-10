@@ -1,0 +1,122 @@
+# pyproject.toml ──────────────────────────────────────────────────────────────
+# TSAR-EXEC v7.1 – Framework APT modulaire (threat intel / authorized red team)
+# Niveau : top-tier shadow redteam 2026
+# ──────────────────────────────────────────────────────────────────────────────
+
+[project]
+name = "tsar-exec"
+version = "7.1.0"
+description = "Modular APT exploitation framework – CVE-2026-23550 focus (authorized use only)"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "Proprietary – Threat Intel / Red Team License (contact for commercial use)"}
+authors = [
+    {name = "CYBERDUDEBIVASH", email = "shadow@wpef-shadowops.fr"}
+]
+keywords = ["redteam", "exploit-framework", "cve-2026-23550", "apt", "webshell", "obfuscation"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Information Technology",
+    "Topic :: Security",
+    "Operating System :: POSIX :: Linux",
+]
+
+dependencies = [
+    "pydantic>=2.7,<3",
+    "pydantic-settings>=2.3,<3",
+    "structlog>=24.1,<25",
+    "requests>=2.31,<3",
+    "tenacity>=8.5,<9",
+    "httpx>=0.27,<1",
+    "rich>=13.7,<14",
+    "colorama>=0.4.6",
+    "dnspython>=2.6,<3",
+    "python-dotenv>=1.0,<2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.2,<9",
+    "pytest-cov>=5.0,<6",
+    "pytest-asyncio>=0.23,<1",
+    "ruff>=0.5,<1",
+    "mypy>=1.11,<2",
+    "types-requests",
+    "types-python-dateutil",
+]
+test = ["pytest", "pytest-cov", "pytest-asyncio"]
+lint = ["ruff", "mypy"]
+
+[project.scripts]
+tsar-recon   = "tsar.cli.recon:main"
+tsar-exploit = "tsar.cli.exploit:main"
+tsar-pipeline = "tsar.cli.pipeline:main"
+tsar-obfuscate = "tsar.tools.epsilon_obfuscator:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tsar"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 98
+select = [
+    "E", "F", "W",      # pycodestyle + pyflakes
+    "I",                # isort
+    "B", "B9",          # bugbear
+    "C4",               # comprehensions
+    "N",                # pep8-naming
+    "UP",               # pyupgrade
+    "ANN",              # flake8-annotations
+    "BLE",              # blind-except
+    "SIM",              # flake8-simplify
+    "ARG",              # flake8-unused-arguments
+    "ERA",              # eradicate
+    "PGH",              # pygrep-hooks (security)
+    "RUF",              # ruff-specific
+]
+ignore = [
+    "ANN101",           # missing type self
+    "ANN102",           # missing type cls
+    "ANN401",           # any as return type (allowed in some places)
+]
+exclude = ["tests/fixtures/*", "chain/*", "demo/*"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101", "ANN", "D"]   # assertions + no docstrings in tests
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+show_error_codes = true
+exclude = [
+    "tests/fixtures",
+    "chain",
+    "demo",
+]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "--strict-markers --cov=tsar --cov-report=term-missing --cov-report=html"
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "online: requires internet (deselect with '-m \"not online\"')",
+]

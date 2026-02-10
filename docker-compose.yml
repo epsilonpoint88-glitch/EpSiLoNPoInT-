@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  tsar:
+    build: .
+    container_name: tsar-pipeline
+    restart: unless-stopped
+    cap_add:
+      - NET_RAW
+      - NET_BIND_SERVICE
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - ./chain:/chain
+      - ./targets.txt:/chain/input/targets.txt:ro
+    ports:
+      - "9050:9050"
+    environment:
+      - DOCK_THRESHOLD=70
+      - CYCLE_TIME=300
