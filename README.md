@@ -2,7 +2,7 @@
 """
 TSAR-EXEC v7.1 + EpSiLoNPoInTFuCK v5.1 - README.md Complet et Prêt à Copier-Coller
 CVE-2026-23550 | Framework d'Exploitation Massive Modular DS Auth Bypass
-Auteur: CYBERDUDEBIVASH | Version: 7.1-GOD | Android 24h Coding | 08/02/2026
+Auteur: EpSiLoNPoInT | Version: 7.1-GOD | Android 24h Coding | 08/02/2026
 """
 
 # =============================================================================
