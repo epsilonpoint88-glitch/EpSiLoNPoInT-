@@ -1,6 +1,3 @@
-readme.md
-
-
 #!/usr/bin/env python3
 """
 TSAR-EXEC v7.1 + EpSiLoNPoInTFuCK v5.1 - README.md Complet et Prêt à Copier-Coller
@@ -1250,3 +1247,4 @@ print(f"""{PRICING_350K}
 {LEGAL_DISCLAIMER}
 {LICENSE_GPL}
 {PACKAGE_CMD}""")
+
